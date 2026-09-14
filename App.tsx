@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View , TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View , TouchableOpacity, FlatList, Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Game duration in seconds
@@ -102,6 +102,14 @@ export default function App() {
     setTimeLeft(GAME_DURATION);
   };
 
+  // User-defined component to render each score item for the FlatList
+  const renderScoreItem = ({ item }: { item: Score }) => (
+    <View style={styles.scoreItem}>
+      <Text style={styles.scoreItemText}>Taps: {item.taps}</Text>
+      <Text style={styles.scoreItemText}>Date: {item.date}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Tap Game</Text>
@@ -127,6 +135,14 @@ export default function App() {
             <Text style={styles.buttonText}>RESET</Text>
         </TouchableOpacity>
       )}
+
+      <Text style={styles.highScoresTitle}>High Scores</Text>
+        <FlatList
+          data={highScores}
+          renderItem={renderScoreItem}
+          keyExtractor={item => item.id}
+          style={styles.list}
+        />
     </View>
   );
 }
@@ -184,5 +200,27 @@ const styles = StyleSheet.create({
   scoreText: {
     fontSize: 20,
     color: '#337ab7',
+  },
+    highScoresTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginTop: 30,
+    marginBottom: 10,
+    color: '#333',
+  },
+  list: {
+    width: '100%',
+  },
+  scoreItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: '#eee',
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  scoreItemText: {
+    fontSize: 16,
+    color: '#555',
   },
 });
