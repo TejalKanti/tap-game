@@ -2,11 +2,20 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View , TouchableOpacity} from 'react-native';
 
 export default function App() {
+  const [taps, setTaps] = useState<number>(0);
+
+  const handleTap = ()=> {
+    setTaps(taps + 1);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Tap Game</Text>
-      <TouchableOpacity style={styles.button}> 
-        <Text style={styles.title}> Start</Text>
+      <TouchableOpacity 
+        style={styles.button}
+        onPress={handleTap}
+      > 
+        <Text style={styles.title}> {taps}</Text>
       </TouchableOpacity>
     </View>
   );
