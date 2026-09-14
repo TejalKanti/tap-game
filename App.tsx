@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , TouchableOpacity} from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text> Tap Game</Text>
+      <Text style={styles.title}> Tap Game</Text>
+      <TouchableOpacity style={styles.button}> 
+        <Text style={styles.title}> Start</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -35,7 +38,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
   },
   buttonText: {
-
+    fontSize: 48,
+    color: '#fff',
+    fontWeight: 'bold',
   }, 
 
 });
