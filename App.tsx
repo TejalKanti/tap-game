@@ -43,6 +43,7 @@ export default function App() {
     loadScores();
     // empty dependency array 
   }, []); 
+  
   // Function to load scores from AsyncStorage
   const loadScores = async () => {
     try {
