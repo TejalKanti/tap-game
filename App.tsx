@@ -1,8 +1,15 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View , TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Game duration in seconds
 const GAME_DURATION = 5; 
+
+type Score = {
+  id: string;
+  taps: number;
+  date: string;
+};
 
 export default function App() {
   const [taps, setTaps] = useState<number>(0);
@@ -10,7 +17,9 @@ export default function App() {
   const [timeLeft, setTimeLeft] = useState<number>(GAME_DURATION);
 
   const [gameActive, setGameActive] = useState<boolean> (false);
-  
+
+ const [highScores, setHighScores] = useState<Score[]>([]);
+   
     // useEffect to handle the timer logic
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
@@ -30,6 +39,9 @@ export default function App() {
   }, [gameActive, timeLeft]); 
   // useEffect dependent on gameActive and timeLeft state variables
 
+  const loadScores = () => {};
+
+  const saveScores = async () => {};
 
   const handleTap = ()=> {
     // setTaps(taps + 1);
