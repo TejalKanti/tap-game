@@ -8,9 +8,29 @@ export default function App() {
   const [taps, setTaps] = useState<number>(0);
 
   const [timeLeft, setTimeLeft] = useState<number>(GAME_DURATION);
-
+  
   const [gameActive, setGameActive] = useState<boolean> (false);
   
+    // useEffect to handle the timer logic
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+    if (gameActive && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft(prevTime => prevTime - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      setGameActive(false);
+    }
+
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [gameActive, timeLeft]); 
+  // useEffect dependent on gameActive and timeLeft state variables
+
+
   const handleTap = ()=> {
     // setTaps(taps + 1);
     // setTaps(prevTaps => prevTaps + 1);
