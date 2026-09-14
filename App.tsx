@@ -29,6 +29,8 @@ export default function App() {
       }, 1000);
     } else if (timeLeft === 0) {
       setGameActive(false);
+      // Call saveScore when the game ends
+      saveScore(taps);
     }
 
     return () => {
@@ -43,7 +45,7 @@ export default function App() {
     loadScores();
     // empty dependency array 
   }, []); 
-  
+
   // Function to load scores from AsyncStorage
   const loadScores = async () => {
     try {
