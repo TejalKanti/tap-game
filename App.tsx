@@ -22,15 +22,35 @@ export default function App() {
     }
   };
 
+  const handleReset = () => {
+    setGameActive(false);
+    setTaps(0);
+    setTimeLeft(GAME_DURATION);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}> Tap Game</Text>
+      
+      <Text> Time Left: {timeLeft} </Text>
+
+      <Text> Taps: {taps} </Text>
+
       <TouchableOpacity 
         style={styles.button}
         onPress={handleTap}
       > 
-        <Text style={styles.title}> {taps}</Text>
+        <Text style={styles.title}> 
+          {gameActive ?  "TAP" : (timeLeft === 0 ? "GAME OVER" : "START")}
+        </Text>
       </TouchableOpacity>
+
+      {timeLeft === 0 && (
+        <TouchableOpacity style={styles.resetButton} 
+          onPress={handleReset}>
+            <Text style={styles.buttonText}>RESET</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
@@ -65,5 +85,11 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
   }, 
-
+  resetButton: {
+    marginTop: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#dc3545',
+    borderRadius: 5,
+  },
 });
