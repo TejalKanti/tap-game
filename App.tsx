@@ -19,7 +19,7 @@ export default function App() {
   const [gameActive, setGameActive] = useState<boolean> (false);
 
  const [highScores, setHighScores] = useState<Score[]>([]);
-   
+
     // useEffect to handle the timer logic
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
@@ -37,11 +37,53 @@ export default function App() {
       }
     };
   }, [gameActive, timeLeft]); 
-  // useEffect dependent on gameActive and timeLeft state variables
 
-  const loadScores = () => {};
+  // useEffect to load high scores from storage when the app loads
+  useEffect(() => {
+    loadScores();
+    // empty dependency array 
+  }, []); 
+  // Function to load scores from AsyncStorage
+  const loadScores = async () => {
+    try {
+      const storedScores = await AsyncStorage.getItem('highScores');
+      if (storedScores !== null) {
+        // Parse the stored JSON string back into an array
+        setHighScores(JSON.parse(storedScores));
+      }
+    } catch (e) {
+      console.error("Failed to load scores", e);
+    }
+  };
 
-  const saveScores = async () => {};
+  // Function to save a new score
+  const saveScore = async (newTaps: number) => {
+    const now = new Date();
+    const newScore: Score = {
+      // Unique ID based on timestamp
+      id: now.getTime().toString(), 
+      taps: newTaps,
+      date: now.toLocaleString(),
+    };
+
+    // Create a new array with the new score and all existing high scores
+    const updatedScores = [...highScores, newScore];
+
+    // Sort the scores in descending order based on taps
+    updatedScores.sort((a, b) => b.taps - a.taps);
+
+    // Keep only the top 5 scores
+    const top5Scores = updatedScores.slice(0, 5);
+
+    setHighScores(top5Scores); // Update state to trigger re-render
+
+    try {
+      // Save the updated top 5 scores to AsyncStorage
+      await AsyncStorage.setItem('#highScores', JSON.stringify(top5Scores));
+    } catch (e) {
+      console.error("Failed to save score", e);
+    }
+  };
 
   const handleTap = ()=> {
     // setTaps(taps + 1);
