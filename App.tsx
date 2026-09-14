@@ -1,12 +1,26 @@
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View , TouchableOpacity} from 'react-native';
 
+// Game duration in seconds
+const GAME_DURATION = 5; 
+
 export default function App() {
   const [taps, setTaps] = useState<number>(0);
 
+  const [timeLeft, setTimeLeft] = useState<number>(GAME_DURATION);
+
+  const [gameActive, setGameActive] = useState<boolean> (false);
+  
   const handleTap = ()=> {
-    setTaps(taps + 1);
-  }
+    // setTaps(taps + 1);
+    // setTaps(prevTaps => prevTaps + 1);
+    if (!gameActive) {
+      setGameActive(true);
+      setTaps(1);
+    } else {
+      setTaps(prevTaps => prevTaps + 1);
+    }
+  };
 
   return (
     <View style={styles.container}>
