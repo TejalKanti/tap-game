@@ -8,7 +8,7 @@ export default function App() {
   const [taps, setTaps] = useState<number>(0);
 
   const [timeLeft, setTimeLeft] = useState<number>(GAME_DURATION);
-  
+
   const [gameActive, setGameActive] = useState<boolean> (false);
   
     // useEffect to handle the timer logic
@@ -52,15 +52,17 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}> Tap Game</Text>
       
-      <Text> Time Left: {timeLeft} </Text>
-
-      <Text> Taps: {taps} </Text>
+      <View style={styles.infoContainer}>
+        <Text style={styles.timerText}>Time Left: {timeLeft}s</Text>
+        <Text style={styles.scoreText}>Taps: {taps}</Text>
+      </View>
 
       <TouchableOpacity 
-        style={styles.button}
+        style={[styles.button, !gameActive && styles.startButton]} 
         onPress={handleTap}
+        disabled={!gameActive && timeLeft === 0}
       > 
-        <Text style={styles.title}> 
+        <Text style={styles.buttonText}> 
           {gameActive ?  "TAP" : (timeLeft === 0 ? "GAME OVER" : "START")}
         </Text>
       </TouchableOpacity>
@@ -111,5 +113,22 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: '#dc3545',
     borderRadius: 5,
+  },
+  startButton: {
+    backgroundColor: '#28a745',
+  },
+    infoContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 20,
+  },
+  timerText: {
+    fontSize: 20,
+    color: '#d9534f',
+  },
+  scoreText: {
+    fontSize: 20,
+    color: '#337ab7',
   },
 });
