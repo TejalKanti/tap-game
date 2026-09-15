@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View , TouchableOpacity, FlatList, Alert} from 'react-native';
+import { StyleSheet, Text, View , TouchableOpacity, FlatList} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Game duration in seconds
