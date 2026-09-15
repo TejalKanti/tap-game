@@ -27,11 +27,7 @@ export default function App() {
       timer = setInterval(() => {
         setTimeLeft(prevTime => prevTime - 1);
       }, 1000);
-    } else if (timeLeft === 0) {
-      setGameActive(false);
-      // Call saveScore when the game ends
-      saveScore(taps);
-    }
+    } 
 
     return () => {
       if (timer) {
@@ -39,6 +35,13 @@ export default function App() {
       }
     };
   }, [gameActive, timeLeft]); 
+
+    useEffect(() => {
+    if (timeLeft === 0 && gameActive) {
+      setGameActive(false);
+      saveScore(taps); 
+    }
+    }, [timeLeft]); 
 
   // useEffect to load high scores from storage when the app loads
   useEffect(() => {
